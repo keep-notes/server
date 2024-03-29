@@ -1,0 +1,36 @@
+scalar Date
+
+type User {
+    _id: ID!
+    name: String!
+    email: String!
+    password: String!
+    lastLogin: Date
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+type Auth {
+    token: String!
+    user: User!
+}
+
+type Query {
+    authUser: User
+}
+
+type Mutation {
+    register(user: RegisterInput!): Auth!
+    login(credentials: LoginInput!): Auth!
+}
+
+input RegisterInput {
+    name: String!
+    email: String!
+    password: String!
+}
+
+input LoginInput {
+    email: String!
+    password: String!
+}
