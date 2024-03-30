@@ -1,3 +1,15 @@
+type Query {
+    authUser: User
+}
+
+type Mutation {
+    register(user: RegisterInput!): Auth!
+    login(credentials: LoginInput!): Auth!
+    addNote(note: AddNoteInput!): Note!
+    editNote(noteId: String, edit: EditNoteInput!): Note!
+    deleteNote(noteId: String!): [Note!]!
+}
+
 scalar Date
 
 type User {
@@ -8,6 +20,7 @@ type User {
     lastLogin: Date
     createdAt: Date!
     updatedAt: Date!
+    notes: [Note!]!
 }
 
 type Auth {
@@ -15,13 +28,12 @@ type Auth {
     user: User!
 }
 
-type Query {
-    authUser: User
-}
-
-type Mutation {
-    register(user: RegisterInput!): Auth!
-    login(credentials: LoginInput!): Auth!
+type Note {
+    _id: ID!
+    title: String!
+    content: String!
+    userId: String!
+    user: User!
 }
 
 input RegisterInput {
@@ -33,4 +45,15 @@ input RegisterInput {
 input LoginInput {
     email: String!
     password: String!
+}
+
+input AddNoteInput {
+    title: String!
+    content: String!
+    userId: String!
+}
+
+input EditNoteInput {
+    title: String
+    content: String
 }
