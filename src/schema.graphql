@@ -6,7 +6,7 @@ type Mutation {
     register(user: RegisterInput!): Auth!
     login(credentials: LoginInput!): Auth!
     addNote(note: AddNoteInput!): Note!
-    editNote(noteId: String, edit: EditNoteInput!): Note!
+    editNote(noteId: String!, edit: EditNoteInput!): Note!
     deleteNote(noteId: String!): [Note!]!
 }
 

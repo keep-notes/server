@@ -61,7 +61,7 @@ export type MutationDeleteNoteArgs = {
 
 export type MutationEditNoteArgs = {
   edit: EditNoteInput;
-  userId?: InputMaybe<Scalars['String']['input']>;
+  noteId: Scalars['String']['input'];
 };
 
 
@@ -79,7 +79,7 @@ export type Note = {
   _id: Scalars['ID']['output'];
   content: Scalars['String']['output'];
   title: Scalars['String']['output'];
-  user: Note;
+  user: User;
   userId: Scalars['String']['output'];
 };
 
@@ -276,7 +276,7 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addNote?: Resolver<ResolversTypes['Note'], ParentType, ContextType, RequireFields<MutationAddNoteArgs, 'note'>>;
   deleteNote?: Resolver<Array<ResolversTypes['Note']>, ParentType, ContextType, RequireFields<MutationDeleteNoteArgs, 'noteId'>>;
-  editNote?: Resolver<ResolversTypes['Note'], ParentType, ContextType, RequireFields<MutationEditNoteArgs, 'edit'>>;
+  editNote?: Resolver<ResolversTypes['Note'], ParentType, ContextType, RequireFields<MutationEditNoteArgs, 'edit' | 'noteId'>>;
   login?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   register?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'user'>>;
 };
@@ -285,7 +285,7 @@ export type NoteResolvers<ContextType = any, ParentType extends ResolversParentT
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  user?: Resolver<ResolversTypes['Note'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
