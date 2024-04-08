@@ -1,3 +1,4 @@
+import { draftResolvers } from '@/resolvers/draft.resolvers';
 import { mutationResolvers } from '@/resolvers/mutation.resolvers';
 import { noteResolvers } from '@/resolvers/note.resolvers';
 import { queryResolvers } from '@/resolvers/query.resolvers';
@@ -13,5 +14,6 @@ export const server = new ApolloServer<ApolloContext>({
         Mutation: mutationResolvers,
         User: userResolvers,
         Note: noteResolvers,
+        Draft: draftResolvers,
     },
 });

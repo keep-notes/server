@@ -29,6 +29,17 @@ export type Auth = {
   user: User;
 };
 
+export type Draft = {
+  __typename?: 'Draft';
+  _id: Scalars['ID']['output'];
+  content: Scalars['String']['output'];
+  createdAt: Scalars['Date']['output'];
+  title: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
+  user: User;
+  userId: Scalars['String']['output'];
+};
+
 export type EditNoteInput = {
   content?: InputMaybe<Scalars['String']['input']>;
   title?: InputMaybe<Scalars['String']['input']>;
@@ -46,6 +57,7 @@ export type Mutation = {
   editNote: Note;
   login: Auth;
   register: Auth;
+  updateDraft: Draft;
 };
 
 
@@ -74,11 +86,18 @@ export type MutationRegisterArgs = {
   user: RegisterInput;
 };
 
+
+export type MutationUpdateDraftArgs = {
+  draft: UpdateDraftInput;
+};
+
 export type Note = {
   __typename?: 'Note';
   _id: Scalars['ID']['output'];
   content: Scalars['String']['output'];
+  createdAt: Scalars['Date']['output'];
   title: Scalars['String']['output'];
+  updatedAt: Scalars['Date']['output'];
   user: User;
   userId: Scalars['String']['output'];
 };
@@ -94,10 +113,17 @@ export type RegisterInput = {
   password: Scalars['String']['input'];
 };
 
+export type UpdateDraftInput = {
+  content: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+  userId: Scalars['String']['input'];
+};
+
 export type User = {
   __typename?: 'User';
   _id: Scalars['ID']['output'];
   createdAt: Scalars['Date']['output'];
+  draft?: Maybe<Draft>;
   email: Scalars['String']['output'];
   lastLogin?: Maybe<Scalars['Date']['output']>;
   name: Scalars['String']['output'];
@@ -186,13 +212,15 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Auth: ResolverTypeWrapper<Auth>;
   Date: ResolverTypeWrapper<Scalars['Date']['output']>;
+  Draft: ResolverTypeWrapper<Draft>;
+  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   EditNoteInput: EditNoteInput;
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   Note: ResolverTypeWrapper<Note>;
-  ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Query: ResolverTypeWrapper<{}>;
   RegisterInput: RegisterInput;
+  UpdateDraftInput: UpdateDraftInput;
   User: ResolverTypeWrapper<User>;
   AdditionalEntityFields: AdditionalEntityFields;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
@@ -204,13 +232,15 @@ export type ResolversParentTypes = {
   String: Scalars['String']['output'];
   Auth: Auth;
   Date: Scalars['Date']['output'];
+  Draft: Draft;
+  ID: Scalars['ID']['output'];
   EditNoteInput: EditNoteInput;
   LoginInput: LoginInput;
   Mutation: {};
   Note: Note;
-  ID: Scalars['ID']['output'];
   Query: {};
   RegisterInput: RegisterInput;
+  UpdateDraftInput: UpdateDraftInput;
   User: User;
   AdditionalEntityFields: AdditionalEntityFields;
   Boolean: Scalars['Boolean']['output'];
@@ -273,18 +303,32 @@ export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'Date';
 }
 
+export type DraftResolvers<ContextType = any, ParentType extends ResolversParentTypes['Draft'] = ResolversParentTypes['Draft']> = {
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
   addNote?: Resolver<ResolversTypes['Note'], ParentType, ContextType, RequireFields<MutationAddNoteArgs, 'note'>>;
   deleteNote?: Resolver<Array<ResolversTypes['Note']>, ParentType, ContextType, RequireFields<MutationDeleteNoteArgs, 'noteId'>>;
   editNote?: Resolver<ResolversTypes['Note'], ParentType, ContextType, RequireFields<MutationEditNoteArgs, 'edit' | 'noteId'>>;
   login?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
   register?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'user'>>;
+  updateDraft?: Resolver<ResolversTypes['Draft'], ParentType, ContextType, RequireFields<MutationUpdateDraftArgs, 'draft'>>;
 };
 
 export type NoteResolvers<ContextType = any, ParentType extends ResolversParentTypes['Note'] = ResolversParentTypes['Note']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   userId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -297,6 +341,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  draft?: Resolver<Maybe<ResolversTypes['Draft']>, ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   lastLogin?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -309,6 +354,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
 export type Resolvers<ContextType = any> = {
   Auth?: AuthResolvers<ContextType>;
   Date?: GraphQLScalarType;
+  Draft?: DraftResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
   Note?: NoteResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

@@ -8,6 +8,7 @@ type Mutation {
     addNote(note: AddNoteInput!): Note!
     editNote(noteId: String!, edit: EditNoteInput!): Note!
     deleteNote(noteId: String!): [Note!]!
+    updateDraft(draft: UpdateDraftInput!): Draft!
 }
 
 scalar Date
@@ -21,6 +22,7 @@ type User {
     createdAt: Date!
     updatedAt: Date!
     notes: [Note!]!
+    draft: Draft
 }
 
 type Auth {
@@ -34,6 +36,18 @@ type Note {
     content: String!
     userId: String!
     user: User!
+    createdAt: Date!
+    updatedAt: Date!
+}
+
+type Draft {
+    _id: ID!
+    title: String!
+    content: String!
+    userId: String!
+    user: User!
+    createdAt: Date!
+    updatedAt: Date!
 }
 
 input RegisterInput {
@@ -56,4 +70,10 @@ input AddNoteInput {
 input EditNoteInput {
     title: String
     content: String
+}
+
+input UpdateDraftInput {
+    title: String!
+    content: String!
+    userId: String!
 }

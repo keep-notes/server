@@ -1,9 +1,11 @@
 import { MutationResolvers } from '@/generated/graphql';
+import DraftService from '@/service/draft.service';
 import NoteService from '@/service/note.service';
 import UserService from '@/service/user.service';
 
 const userService = new UserService();
 const noteService = new NoteService();
+const draftService = new DraftService();
 
 export const mutationResolvers: MutationResolvers = {
     async register(_, args) {
@@ -20,5 +22,8 @@ export const mutationResolvers: MutationResolvers = {
     },
     async deleteNote(_, args) {
         return noteService.deleteNote(args.noteId);
+    },
+    async updateDraft(_, args) {
+        return draftService.updateDraft(args.draft);
     },
 };
