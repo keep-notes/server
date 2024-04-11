@@ -2,7 +2,8 @@
   "scripts": {
     "codegen": "graphql-codegen --config codegen.ts",
     "start": "npm run codegen && nodemon",
-    "lint": "eslint --ignore-path .eslintignore ."
+    "lint": "eslint --ignore-path .eslintignore .",
+    "build": "node -r tsconfig-paths/register -r ts-node/register ./src/index.ts"
   },
   "dependencies": {
     "@apollo/server": "^4.10.2",
