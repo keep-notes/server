@@ -6,14 +6,16 @@
     "allowJs": true,
     "outDir": "build",
     "rootDir": "src",
-    "moduleResolution": "Bundler",
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*", "./build/*"]
     }
-  }
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
 }
