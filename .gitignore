@@ -2,5 +2,6 @@
 /build
 /.idea
 /node_modules
+/coverage
 .env
 yarn.lock

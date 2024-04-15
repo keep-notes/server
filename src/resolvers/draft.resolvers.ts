@@ -1,10 +1,8 @@
 import { DraftResolvers } from '@/generated/graphql';
-import UserRepository from '@/repository/user.repository';
-
-const userRepo = new UserRepository();
+import { userRepository } from '@/repository/user.repository';
 
 export const draftResolvers: DraftResolvers = {
     user(parent) {
-        return userRepo.findByDraft(parent);
+        return userRepository.findByDraft(parent);
     },
 };

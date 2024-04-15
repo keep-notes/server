@@ -2,10 +2,20 @@ import { AddNoteInput, EditNoteInput } from '@/generated/graphql';
 import NoteModel from '@/model/note.model';
 import { GraphQLError } from 'graphql/error';
 
-export default class NoteService {
+class NoteService {
     async addNote(input: AddNoteInput) {
         const note = new NoteModel(input);
         await note.save();
+        return note;
+    }
+
+    async updatePinStatus(noteId: string, isPinned: boolean) {
+        const note = await NoteModel.findByIdAndUpdate(
+            noteId,
+            { isPinned },
+            { new: true }
+        ).exec();
+        if (!note) throw new GraphQLError('Note not found');
         return note;
     }
 
@@ -23,3 +33,5 @@ export default class NoteService {
         return NoteModel.find({ userId: note.userId }).exec();
     }
 }
+
+export const noteService = new NoteService();

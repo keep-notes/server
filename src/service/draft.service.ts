@@ -1,7 +1,7 @@
 import { UpdateDraftInput } from '@/generated/graphql';
 import DraftModel from '@/model/draft.model';
 
-export default class DraftService {
+class DraftService {
     async updateDraft(input: UpdateDraftInput) {
         return DraftModel.findOneAndUpdate({ userId: input.userId }, input, {
             new: true,
@@ -9,3 +9,5 @@ export default class DraftService {
         }).exec();
     }
 }
+
+export const draftService = new DraftService();

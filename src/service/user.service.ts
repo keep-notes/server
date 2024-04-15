@@ -4,7 +4,7 @@ import * as argon from 'argon2';
 import { GraphQLError } from 'graphql/error';
 import * as jwt from 'jsonwebtoken';
 
-export default class UserService {
+class UserService {
     async createUser(input: RegisterInput) {
         const hashed = await argon.hash(input.password);
         const user = new UserModel({ ...input, password: hashed });
@@ -45,3 +45,5 @@ export default class UserService {
         return jwt.sign(payload, secret, { expiresIn: '3d' });
     }
 }
+
+export const userService = new UserService();

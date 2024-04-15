@@ -3,11 +3,15 @@ import { server } from '@/apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import * as mongoose from 'mongoose';
 
-!async function startServer() {
+export async function startServer(port = 4000) {
     await mongoose.connect(process.env.MONGO_URI!);
     const { url } = await startStandaloneServer(server, {
-        listen: { port: 4000 },
+        listen: { port },
         context,
     });
     console.log(`🚀  Server ready at: ${ url }`);
-}();
+
+    return { server, url };
+}
+
+startServer();

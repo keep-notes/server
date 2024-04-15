@@ -10,9 +10,13 @@ const schema = new Schema<Note>(
         content: {
             type: String,
         },
+        isPinned: {
+            type: Boolean,
+            default: false,
+        },
         userId: {
             type: String,
-        }
+        },
     },
     { timestamps: true },
 );

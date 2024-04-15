@@ -1,10 +1,8 @@
 import { NoteResolvers } from '@/generated/graphql';
-import UserRepository from '@/repository/user.repository';
-
-const userRepo = new UserRepository();
+import { userRepository } from '@/repository/user.repository';
 
 export const noteResolvers: NoteResolvers = {
     user(parent) {
-        return userRepo.findByNote(parent);
+        return userRepository.findByNote(parent);
     },
 };

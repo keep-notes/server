@@ -1,15 +1,12 @@
 import { UserResolvers } from '@/generated/graphql';
-import DraftRepository from '@/repository/draft.repository';
-import NoteRepository from '@/repository/note.repository';
-
-const noteRepo = new NoteRepository();
-const draftRepo = new DraftRepository();
+import { draftRepository } from '@/repository/draft.repository';
+import { noteRepository } from '@/repository/note.repository';
 
 export const userResolvers: UserResolvers = {
     notes(parent) {
-        return noteRepo.userNotes(parent._id);
+        return noteRepository.userNotes(parent._id);
     },
     draft(parent) {
-        return draftRepo.userDraft(parent._id);
+        return draftRepository.userDraft(parent._id);
     },
 };

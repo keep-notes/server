@@ -56,7 +56,9 @@ export type Mutation = {
   deleteNote: Array<Note>;
   editNote: Note;
   login: Auth;
+  pinNote: Note;
   register: Auth;
+  unpinNote: Note;
   updateDraft: Draft;
 };
 
@@ -82,8 +84,18 @@ export type MutationLoginArgs = {
 };
 
 
+export type MutationPinNoteArgs = {
+  noteId: Scalars['String']['input'];
+};
+
+
 export type MutationRegisterArgs = {
   user: RegisterInput;
+};
+
+
+export type MutationUnpinNoteArgs = {
+  noteId: Scalars['String']['input'];
 };
 
 
@@ -96,6 +108,7 @@ export type Note = {
   _id: Scalars['ID']['output'];
   content: Scalars['String']['output'];
   createdAt: Scalars['Date']['output'];
+  isPinned: Scalars['Boolean']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['Date']['output'];
   user: User;
@@ -218,12 +231,12 @@ export type ResolversTypes = {
   LoginInput: LoginInput;
   Mutation: ResolverTypeWrapper<{}>;
   Note: ResolverTypeWrapper<Note>;
+  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
   Query: ResolverTypeWrapper<{}>;
   RegisterInput: RegisterInput;
   UpdateDraftInput: UpdateDraftInput;
   User: ResolverTypeWrapper<User>;
   AdditionalEntityFields: AdditionalEntityFields;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']['output']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -238,12 +251,12 @@ export type ResolversParentTypes = {
   LoginInput: LoginInput;
   Mutation: {};
   Note: Note;
+  Boolean: Scalars['Boolean']['output'];
   Query: {};
   RegisterInput: RegisterInput;
   UpdateDraftInput: UpdateDraftInput;
   User: User;
   AdditionalEntityFields: AdditionalEntityFields;
-  Boolean: Scalars['Boolean']['output'];
 };
 
 export type UnionDirectiveArgs = {
@@ -319,7 +332,9 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
   deleteNote?: Resolver<Array<ResolversTypes['Note']>, ParentType, ContextType, RequireFields<MutationDeleteNoteArgs, 'noteId'>>;
   editNote?: Resolver<ResolversTypes['Note'], ParentType, ContextType, RequireFields<MutationEditNoteArgs, 'edit' | 'noteId'>>;
   login?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'credentials'>>;
+  pinNote?: Resolver<ResolversTypes['Note'], ParentType, ContextType, RequireFields<MutationPinNoteArgs, 'noteId'>>;
   register?: Resolver<ResolversTypes['Auth'], ParentType, ContextType, RequireFields<MutationRegisterArgs, 'user'>>;
+  unpinNote?: Resolver<ResolversTypes['Note'], ParentType, ContextType, RequireFields<MutationUnpinNoteArgs, 'noteId'>>;
   updateDraft?: Resolver<ResolversTypes['Draft'], ParentType, ContextType, RequireFields<MutationUpdateDraftArgs, 'draft'>>;
 };
 
@@ -327,6 +342,7 @@ export type NoteResolvers<ContextType = any, ParentType extends ResolversParentT
   _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   content?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  isPinned?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
