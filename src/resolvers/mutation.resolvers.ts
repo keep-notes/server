@@ -13,17 +13,14 @@ export const mutationResolvers: MutationResolvers = {
     async addNote(_, args) {
         return noteService.addNote(args.note);
     },
-    async pinNote(_, args) {
-        return noteService.updatePinStatus(args.noteId, true);
-    },
-    async unpinNote(_, args) {
-        return noteService.updatePinStatus(args.noteId, false);
-    },
     async editNote(_, args) {
         return noteService.editNote(args.noteId, args.edit);
     },
     async deleteNote(_, args) {
-        return noteService.deleteNote(args.noteId);
+        return noteService.editNote(args.noteId, { isTrashed: true });
+    },
+    async restoreNote(_, args) {
+        return noteService.editNote(args.noteId, { isTrashed: false });
     },
     async updateDraft(_, args) {
         return draftService.updateDraft(args.draft);

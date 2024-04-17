@@ -14,6 +14,14 @@ const schema = new Schema<Note>(
             type: Boolean,
             default: false,
         },
+        isArchived: {
+            type: Boolean,
+            default: false,
+        },
+        isTrashed: {
+            type: Boolean,
+            default: false,
+        },
         userId: {
             type: String,
         },

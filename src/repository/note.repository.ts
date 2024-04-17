@@ -1,22 +1,20 @@
 import NoteModel from '@/model/note.model';
 
 class NoteRepository {
-    async userNotes(userId: string) {
-        const notes = await Promise.all([
-            this.userPinnedNotes(userId),
-            this.userUnpinnedNotes(userId),
-        ]);
-        return notes.flat();
-    }
-
-    private async userPinnedNotes(userId: string) {
-        return NoteModel.find({ userId, isPinned: true })
+    async userActiveNotes(userId: string) {
+        return NoteModel.find({ userId, isArchived: false, isTrashed: false })
             .sort({ createdAt: -1 })
             .exec();
     }
 
-    private async userUnpinnedNotes(userId: string) {
-        return NoteModel.find({ userId, isPinned: false })
+    async userArchivedNotes(userId: string) {
+        return NoteModel.find({ userId, isArchived: true, isTrashed: false })
+            .sort({ createdAt: -1 })
+            .exec();
+    }
+
+    async userTrashedNotes(userId: string) {
+        return NoteModel.find({ userId, isTrashed: true })
             .sort({ createdAt: -1 })
             .exec();
     }
