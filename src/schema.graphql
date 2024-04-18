@@ -11,7 +11,6 @@ type Mutation {
     editNote(noteId: String!, edit: EditNoteInput!): Note!
     deleteNote(noteId: String!): Note!
     restoreNote(noteId: String!): Note!
-    updateDraft(draft: UpdateDraftInput!): Draft!
 }
 
 type User {
@@ -25,7 +24,6 @@ type User {
     notes(query: String): [Note!]!
     archived: [Note!]!
     trashed: [Note!]!
-    draft: Draft
 }
 
 type Auth {
@@ -40,16 +38,6 @@ type Note {
     isPinned: Boolean!
     isArchived: Boolean!
     isTrashed: Boolean!
-    userId: String!
-    user: User!
-    createdAt: Date!
-    updatedAt: Date!
-}
-
-type Draft {
-    _id: ID!
-    title: String!
-    content: String!
     userId: String!
     user: User!
     createdAt: Date!
@@ -78,10 +66,4 @@ input EditNoteInput {
     content: String
     isPinned: Boolean
     isArchived: Boolean
-}
-
-input UpdateDraftInput {
-    title: String!
-    content: String!
-    userId: String!
 }
