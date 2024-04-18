@@ -18,6 +18,19 @@ class NoteRepository {
             .sort({ createdAt: -1 })
             .exec();
     }
+
+    async search(query: string) {
+        return NoteModel.aggregate([
+            {
+                $search: {
+                    text: {
+                        query,
+                        path: 'content',
+                    }
+                }
+            }
+        ]).exec();
+    }
 }
 
 export const noteRepository = new NoteRepository();

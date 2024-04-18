@@ -145,6 +145,11 @@ export type User = {
   updatedAt: Scalars['Date']['output'];
 };
 
+
+export type UserNotesArgs = {
+  query?: InputMaybe<Scalars['String']['input']>;
+};
+
 export type AdditionalEntityFields = {
   path?: InputMaybe<Scalars['String']['input']>;
   type?: InputMaybe<Scalars['String']['input']>;
@@ -363,7 +368,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   lastLogin?: Resolver<Maybe<ResolversTypes['Date']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  notes?: Resolver<Array<ResolversTypes['Note']>, ParentType, ContextType>;
+  notes?: Resolver<Array<ResolversTypes['Note']>, ParentType, ContextType, Partial<UserNotesArgs>>;
   password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   trashed?: Resolver<Array<ResolversTypes['Note']>, ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;

@@ -9,8 +9,10 @@ export const userResolvers: UserResolvers = {
     draft(parent) {
         return draftRepository.userDraft(parent._id);
     },
-    notes(parent) {
-        return noteRepository.userActiveNotes(parent._id);
+    notes(parent, args) {
+        return args.query
+            ? noteRepository.search(args.query)
+            : noteRepository.userActiveNotes(parent._id);
     },
     trashed(parent) {
         return noteRepository.userTrashedNotes(parent._id);
